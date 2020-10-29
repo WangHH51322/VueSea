@@ -2,15 +2,17 @@
     <div>
         <el-container>
             <el-header class="homeHeader">
-                <div class="title">智能油田管理平台</div>
+                <el-col :span="15">
+                    <div class="title">智能油田管理平台</div>
+                </el-col>
+                <el-col :span="2" >
+                    <template slot="title">
+                        <router-link to="/ProductionManagement">生产管理</router-link>
+                    </template>
+                </el-col>
             </el-header>
             <el-container>
-                <el-aside width="200px">
-                    <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
-                </el-aside>
-                <el-container>
-                    <el-main>Main</el-main>
-                </el-container>
+                <router-view></router-view>
             </el-container>
         </el-container>
     </div>
@@ -43,7 +45,12 @@
     },
     methods: {
       handleNodeClick(data) {
-        console.log(data);
+        if (data.label == '虚拟计量'){
+          this.$router.push({ path:'/VirtualMeasurement'})
+        }else if (data.label == '生产优化'){
+          this.$router.push({ path:'/ProductionOverview'})
+        }
+        console.log(data.label);
       }
     }
   };
