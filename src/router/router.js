@@ -5,6 +5,7 @@ import ProductionManagement from '../views/productionManagement/ProductionManage
 import ProductionOptimization from '../views/productionManagement/productionOptimization/ProductionOptimization.vue'
 import VirtualMeasurement from '../views/productionManagement/productionOptimization/VirtualMeasurement.vue'
 import ProductionOverview from '../views/productionManagement/productionOptimization/ProductionOverview.vue'
+import RemoteMonitoring from '../views/remoteMonitoring/RemoteMonitoring.vue'
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -45,6 +46,12 @@ const routes = [
             ]
           }
         ]
+      },
+      {
+        path: '/RemoteMonitoring',
+        name: '远程监控',
+        component: RemoteMonitoring,
+        meta:{title:'远程监控',breadNumber:1,toPath:'/RemoteMonitoring'},
       }
     ]
   },
