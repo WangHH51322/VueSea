@@ -1,9 +1,11 @@
 <template>
     <div>
         <el-container>
-            <el-aside width="200px">
-                <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
-            </el-aside>
+            <el-card class="box-card" shadow="always">
+                <el-aside width="200px">
+                    <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+                </el-aside>
+            </el-card>
             <el-container>
                 <el-main>
                     <el-breadcrumb class="app-breadcrumb" separator="/">
@@ -82,6 +84,9 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+    .box-card {
+        width: 200px;
+        height: 650px;
+    }
 </style>
