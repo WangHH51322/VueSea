@@ -6,8 +6,6 @@
             </el-aside>
             <el-container>
                 <el-main>
-<!--                    <crumbs></crumbs>-->
-                    123
                     <el-breadcrumb class="app-breadcrumb" separator="/">
                         <transition-group name="breadcrumb">
                             <el-breadcrumb-item v-for="(item,index) in levelList" v-if="item.meta.title" :key="item.path">
@@ -27,13 +25,8 @@
 
 <script>
 
-  import crumbs from "../crumbs/index.vue"
   export default {
     name: "ProductionManagement",
-    components:{
-      crumbs
-    },
-
     data() {
       return {
         data: [{
