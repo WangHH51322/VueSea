@@ -1,24 +1,24 @@
 <template>
     <div>
-        <router-view></router-view>
+        首页
     </div>
 </template>
 
 <script>
   export default {
 
-    name: "ProductionOptimization",
+    name: "Home",
 
     data() {
       return {
-
       };
     },
     methods: {
+
     }
   };
 </script>
 
-<style scoped>
+<style>
 
 </style>
