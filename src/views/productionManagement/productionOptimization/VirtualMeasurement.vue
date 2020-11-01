@@ -49,25 +49,81 @@
             </el-select>
         </div>
         <!--折线图-->
-        <div class="chartZone" style="margin-top: 5px">
+        <div class="chartZone">
             <el-row>
-                <el-col :span="10">
+                <el-col :span="8" style="height:300px">
                     <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 5px">
                         单井实时虚拟计量值
                     </span>
-                    <ve-line :data="lineChartData"></ve-line>
+                    <ve-line :data="lineChartData" width="400px" height="320px"></ve-line>
                 </el-col>
-                <el-col :span="10">
+                <el-col :span="8" style="height:300px">
                     <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 5px">
                         单井累计产量分析
                     </span>
-                    <ve-line :data="lineChartData"></ve-line>
+                    <ve-line :data="lineChartData" width="400px" height="320px"></ve-line>
                 </el-col>
-                <el-col :span="4">
-                    <ve-gauge :data="dashboardData" :settings="this.chartSettings"></ve-gauge>
+                <el-col :span="8" style="height:300px">
+                    <ve-gauge :data="dashboardData" :settings="this.chartSettings" width="400px" height="320px"></ve-gauge>
                 </el-col>
             </el-row>
-
+        </div>
+        <!--每页数据数目-->
+        <div class="block">
+            <el-col :span="20" style="height:35px">
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :page-sizes="[10, 20, 50, 100]"
+                        :page-size="10"
+                        layout="sizes, pager">
+                </el-pagination>
+            </el-col>
+            <el-col :span="4" style="height:35px">
+                <el-form>
+                    <el-form-item label="Search:">
+                        <el-input placeholder="请输入关键字" style="width: 120px" size="mini"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </div>
+        <!--表格-->
+        <div class="tableZone">
+            <el-table
+                    :data="tableData"
+                    height="200"
+                    style="width: 100%"
+                    :default-sort = "{prop: 'date', order: 'descending'}"
+            >
+                <el-table-column
+                        prop="date"
+                        label="日期"
+                        sortable
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="name"
+                        label="姓名"
+                        sortable
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="address"
+                        label="地址"
+                        :formatter="formatter">
+                </el-table-column>
+            </el-table>
+        </div>
+        <!--翻页-->
+        <div class="block">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-size="10"
+                    layout="total,prev, pager, next, jumper"
+                    :total="100">
+            </el-pagination>
         </div>
     </div>
 
@@ -209,10 +265,37 @@
             { type: '占比', value: 0.8 }
           ]
         },
+
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }],
+        currentPage: 1,
       }
     },
-    methods(){
-
+    methods: {
+      formatter(row, column) {
+        return row.address;
+      },
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
     },
   }
 </script>
@@ -233,6 +316,9 @@
         font-size: 15px;
         font-family: "微软雅黑";
         margin-right: 10px;
+    }
+    .chartZone{
+        margin-top: 5px;
     }
 
 </style>
