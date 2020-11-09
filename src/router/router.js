@@ -4,7 +4,8 @@ import Main from '../views/Main.vue'
 import Home from '../views/home/Home.vue'
 import ProductionManagement from '../views/productionManagement/ProductionManagement.vue'
 import ProductionOptimization from '../views/productionManagement/productionOptimization/ProductionOptimization.vue'
-import VirtualMeasurement from '../views/productionManagement/productionOptimization/VirtualMeasurement.vue'
+import VirtualMeasurementOnLine from '../views/productionManagement/productionOptimization/VirtualMeasurementOnLine.vue'
+import VirtualMeasurementOffLine from '../views/productionManagement/productionOptimization/VirtualMeasurementOffLine.vue'
 import ProductionOverview from '../views/productionManagement/productionOptimization/ProductionOverview.vue'
 import RemoteMonitoring from '../views/remoteMonitoring/RemoteMonitoring.vue'
 
@@ -50,10 +51,16 @@ const routes = [
                 meta:{title:'生产概览',breadNumber:4,toPath:'/ProductionManagement/ProductionOptimization/ProductionOverview'}
               },
               {
-                path: 'VirtualMeasurement',
+                path: 'VirtualMeasurementOnLine',
                 name: '虚拟计量',
-                component: VirtualMeasurement,
-                meta:{title:'虚拟计量',breadNumber:4,toPath:'/ProductionManagement/ProductionOptimization/VirtualMeasurement'}
+                component: VirtualMeasurementOnLine,
+                meta:{title:'虚拟计量',breadNumber:4,toPath:'/ProductionManagement/ProductionOptimization/VirtualMeasurementOnLine'}
+              },
+              {
+                path: 'VirtualMeasurementOffLine',
+                name: '虚拟计量',
+                component: VirtualMeasurementOffLine,
+                meta:{title:'虚拟计量',breadNumber:4,toPath:'/ProductionManagement/ProductionOptimization/VirtualMeasurementOnLine'}
               },
             ]
           }

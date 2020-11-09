@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-container>
-            <el-card class="box-card" shadow="always">
-                <el-aside width="200px">
+            <el-card class="box-card" shadow="always" style="width: 180px" :body-style="{ padding: '5px' }">
+                <el-aside width="100px">
                     <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
                 </el-aside>
             </el-card>
             <el-container>
-                <el-main>
+                <el-main style="padding: 10px">
                     <el-breadcrumb class="app-breadcrumb" separator="/">
                         <transition-group name="breadcrumb">
                             <el-breadcrumb-item v-for="(item,index) in levelList" v-if="item.meta.title" :key="item.path">
@@ -61,7 +61,7 @@
     methods: {
       handleNodeClick(data) {
         if (data.label == '虚拟计量'){
-          this.$router.push({ path:'/ProductionManagement/ProductionOptimization/VirtualMeasurement'})
+          this.$router.push({ path:'/ProductionManagement/ProductionOptimization/VirtualMeasurementOnLine'})
         }else if (data.label == '生产概览'){
           this.$router.push({ path:'/ProductionManagement/ProductionOptimization/ProductionOverview'})
         }else if (data.label == '生产优化'){

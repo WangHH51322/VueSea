@@ -4,6 +4,11 @@
             <i class="el-icon-s-data"> 虚拟计量</i>
         </div>
         <el-divider></el-divider>
+        <!--在线、离线模式选择-->
+        <div class="modelSelectZone">
+            <el-button type="primary" round size="mini">实时模式</el-button>
+            <el-button round size="mini" @click="goToHistoryModel">历史模式</el-button>
+        </div>
         <!--下拉框选择区-->
         <div class="selectZone">
             <span class="selectZoneTitle">请选择:</span>
@@ -51,20 +56,39 @@
         <!--折线图-->
         <div class="chartZone">
             <el-row>
-                <el-col :span="8" style="height:300px">
+                <el-col :span="8" style="height:340px">
                     <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 5px">
                         单井实时虚拟计量值
                     </span>
-                    <ve-line :data="lineChartData1" :settings="this.lineChartSettings1" width="400px" height="320px"></ve-line>
+                    <div id="myChart" :style="{width:'450px',height: '320px'}"></div>
                 </el-col>
-                <el-col :span="8" style="height:300px">
+                <el-col :span="9" style="height:340px">
                     <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 5px">
                         单井累计产量分析
                     </span>
-                    <ve-line :data="lineChartData2" :settings="this.lineChartSettings2" width="450px" height="320px"></ve-line>
+                    <div id="myChart2" :style="{width:'500px',height: '320px'}"></div>
                 </el-col>
-                <el-col :span="8" style="height:300px">
-                    <ve-gauge :data="dashboardData" :settings="this.dashboardSettings" width="400px" height="320px"></ve-gauge>
+                <el-col :span="3.5" style="height:340px">
+                    <el-row>
+                        <div id="myChart3" :style="{width:'150px',height: '150px'}"></div>
+                        <span style="display: flex;align-items: center;justify-content: center">
+                            油相偏差
+                        </span>
+                    </el-row>
+                    <el-row>
+                        <div id="myChart4" :style="{width:'150px',height: '150px'}"></div>
+                        <span style="display: flex;align-items: center;justify-content: center">
+                            水相偏差
+                        </span>
+                    </el-row>
+                </el-col>
+                <el-col :span="3.5" style="height:340px;margin-left: 15px">
+                    <el-row>
+                        <div id="myChart5" :style="{width:'150px',height: '150px'}"></div>
+                        <span style="display: flex;align-items: center;justify-content: center">
+                            气相偏差
+                        </span>
+                    </el-row>
                 </el-col>
             </el-row>
         </div>
@@ -210,14 +234,7 @@
             max: 1
           }
         }
-      },
-      this.lineChartSettings1 = {
-        yAxisName: ['体积流量m³/d']
-      },
-      this.lineChartSettings2 = {
-        yAxisName: ['体积流量m³/d']
       }
-
       return{
         /*下拉框数据*/
         value1: '',
@@ -317,52 +334,6 @@
             label: 'A6井'
           },
         ],
-
-        /*折线图数据*/
-        lineChartData1: {
-          columns: ['时间', '油', '气', '水'],
-          rows: [
-            { '时间': '8:00', '油': 34, '气': 740, '水': 600 },
-            { '时间': '8:30', '油': 36, '气': 701, '水': 673 },
-            { '时间': '9:00', '油': 33, '气': 759, '水': 608 },
-            { '时间': '9:30', '油': 34, '气': 703, '水': 672 },
-            { '时间': '10:00', '油': 36, '气': 790, '水': 605 },
-            { '时间': '10:30', '油': 33, '气': 707, '水': 669 },
-            { '时间': '11:00', '油': 38, '气': 775, '水': 602 },
-            { '时间': '11:30', '油': 31, '气': 705, '水': 662 },
-            { '时间': '12:00', '油': 43, '气': 766, '水': 605 },
-            { '时间': '12:30', '油': 33, '气': 706, '水': 675 },
-            { '时间': '13:00', '油': 46, '气': 785, '水': 602 },
-            { '时间': '13:30', '油': 36, '气': 715, '水': 682 },
-            { '时间': '14:00', '油': 32, '气': 772, '水': 608 },
-            { '时间': '14:30', '油': 42, '气': 702, '水': 678 },
-            { '时间': '15:00', '油': 29, '气': 783, '水': 609 },
-            { '时间': '15:30', '油': 39, '气': 703, '水': 689 },
-            { '时间': '16:00', '油': 32, '气': 774, '水': 609 },
-          ]
-        },
-        lineChartData2: {
-          columns: ['时间', '油', '气', '水', '日报-油', '日报-气', '日报-水'],
-          rows: [
-            { '时间': '8:00', '油': 34, '气': 740, '水': 600 ,'日报-油': 34, '日报-气': 740, '日报-水': 600},
-            { '时间': '8:30', '油': 70, '气': 1141, '水': 973 ,'日报-油': 74, '日报-气': 1480, '日报-水': 1273},
-            { '时间': '9:00', '油': 103, '气': 2500, '水': 2181 ,'日报-油': 114, '日报-气': 2220, '日报-水': 1881},
-            { '时间': '9:30', '油': 137, '气': 2603, '水': 2253 ,'日报-油': 154, '日报-气': 2960, '日报-水': 2553},
-            { '时间': '10:00', '油': 173, '气': 3993, '水': 3458 ,'日报-油': 194, '日报-气': 3700, '日报-水': 3158},
-            { '时间': '10:30', '油': 206, '气': 4100, '水': 3527 ,'日报-油': 234, '日报-气': 4400, '日报-水': 3827},
-            { '时间': '11:00', '油': 244, '气': 5475, '水': 4729 ,'日报-油': 274, '日报-气': 5180, '日报-水': 4429},
-            { '时间': '11:30', '油': 275, '气': 5580, '水': 4791 ,'日报-油': 314, '日报-气': 5900, '日报-水': 5091},
-            { '时间': '12:00', '油': 318, '气': 6946, '水': 5996 ,'日报-油': 354, '日报-气': 6660, '日报-水': 5696},
-            { '时间': '12:30', '油': 451, '气': 7052, '水': 6071 ,'日报-油': 394, '日报-气': 7400, '日报-水': 6371},
-            { '时间': '13:00', '油': 497, '气': 8437, '水': 7273 ,'日报-油': 434, '日报-气': 8140, '日报-水': 6973},
-            { '时间': '13:30', '油': 533, '气': 8552, '水': 7355 ,'日报-油': 474, '日报-气': 8880, '日报-水': 7655},
-            { '时间': '14:00', '油': 565, '气': 9924, '水': 8563 ,'日报-油': 514, '日报-气': 9620, '日报-水': 8263},
-            { '时间': '14:30', '油': 597, '气': 10526, '水': 8641 ,'日报-油': 554, '日报-气': 10360, '日报-水': 8941},
-            { '时间': '15:00', '油': 616, '气': 10809, '水': 9850 ,'日报-油': 594, '日报-气': 11100, '日报-水': 9550},
-            { '时间': '15:30', '油': 645, '气': 12100, '水': 9939 ,'日报-油': 634, '日报-气': 11840, '日报-水': 10239},
-            { '时间': '16:00', '油': 677, '气': 12586, '水': 10848 ,'日报-油': 674, '日报-气': 12580, '日报-水': 10848},
-          ]
-        },
         /*表盘数据*/
         dashboardData: {
           columns: ['type', 'value'],
@@ -545,7 +516,312 @@
         currentPage: 1,
       }
     },
+    mounted(){
+      this.drawLine();
+    },
     methods: {
+      drawLine(){
+        // 基于准备好的dom，初始化echarts实例
+        let myChart = this.$echarts.init(document.getElementById('myChart'))
+        let myChart2 = this.$echarts.init(document.getElementById('myChart2'))
+        let myChart3 = this.$echarts.init(document.getElementById('myChart3'))
+        let myChart4 = this.$echarts.init(document.getElementById('myChart4'))
+        let myChart5 = this.$echarts.init(document.getElementById('myChart5'))
+        // 绘制图表
+        myChart.setOption({
+          backgroundColor: '#FFFFFF',
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: ['油', '气', '水'],
+            left: 'center'
+          },
+          grid: {
+            left: '3%',
+            bottom: '3%',
+            containLabel: true
+          },
+          toolbox: {
+            show: false,
+            // left: 10,
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              dataView: {readOnly: false},
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+
+          xAxis: {
+            type: 'category',
+            data: ['8:00:00', '8:10:00', '8:20:00', '8:30:00', '8:40:00', '8:50:00', '9:00:00', '9:10:00', '9:20:00', '9:30:00', '9:40:00', '9:50:00', '10:00:00', '10:10:00', '10:20:00', '10:30:00', '10:40:00', '10:50:00', '11:00:00', '11:10:00', '11:20:00', '11:30:00', '11:40:00', '11:50:00', '12:00:00', '12:10:00', '12:20:00', '12:30:00', '12:40:00', '12:50:00', '13:00:00', '13:10:00', '13:20:00', '13:30:00', '13:40:00', '13:50:00', '14:00:00', '14:10:00', '14:20:00', '14:30:00', '14:40:00', '14:50:00', '15:00:00', '15:10:00', '15:20:00', '15:30:00', '15:40:00', '15:50:00', '16:00:00'],
+            name: '时间',
+            axisLabel: {
+              show: true,
+              textStyle: {
+                //color: '#c3dbff',  //更改坐标轴文字颜色
+                fontSize: 12      //更改坐标轴文字大小
+              }
+            },
+          },
+          yAxis: {
+            type: 'value',
+            show: true,
+            name: '体积流量 m3/d'
+          },
+          series: [{
+            name: '油',
+            smooth: true,
+            type: 'line',
+            itemStyle: {
+              normal: {
+                color: '#409EFF', //改变折线点的颜色
+                lineStyle: {
+                  color: '#409EFF' //改变折线颜色
+                }
+              }
+            },
+            data: [34, 31, 40, 36, 34, 38, 39, 37, 40, 30, 36, 31, 39, 33, 37, 36, 38, 30, 34, 36, 40, 40, 31, 40, 40, 35, 38, 38, 30, 40, 40, 34, 39, 36, 33, 38, 38, 32, 38, 37, 32, 34, 31, 35, 36, 32, 34, 35, 36]
+          }, {
+            name: '气',
+            type: 'line',
+            smooth: true,
+            itemStyle: {
+              normal: {
+                color: '#67C23A', //改变折线点的颜色
+                lineStyle: {
+                  color: '#67C23A' //改变折线颜色
+                }
+              }
+            },
+            data: [740, 710, 707, 743, 777, 717, 711, 793, 773, 711, 759, 740, 719, 700, 780, 772, 768, 704, 743, 736, 726, 785, 777, 742, 781, 764, 724, 712, 700, 706, 738, 791, 700, 746, 713, 711, 702, 791, 719, 793, 796, 743, 786, 750, 777, 797, 720, 735, 753]
+          }, {
+            name: '水',
+            type: 'line',
+            smooth: true,
+            data: [673, 653, 633, 601, 612, 605, 692, 672, 640, 613, 613, 678, 626, 623, 679, 645, 655, 644, 609, 690, 609, 638, 668, 619, 642, 609, 615, 628, 673, 636, 652, 657, 635, 674, 650, 686, 655, 664, 610, 619, 658, 616, 618, 664, 619, 618, 682, 622, 689]
+          }]
+        });
+        myChart2.setOption({
+          backgroundColor: '#FFFFFF',
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: ['油', '气', '水', '日报-油', '日报-气', '日报-水'],
+            left: 'center'
+          },
+          grid: {
+            left: '3%',
+            bottom: '3%',
+            containLabel: true
+          },
+
+          toolbox: {
+            show: false,
+            // left: 10,
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              dataView: {readOnly: false},
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+
+
+          xAxis: {
+            type: 'category',
+            data: ['8:00:00', '8:10:00', '8:20:00', '8:30:00', '8:40:00', '8:50:00', '9:00:00', '9:10:00', '9:20:00', '9:30:00', '9:40:00', '9:50:00', '10:00:00', '10:10:00', '10:20:00', '10:30:00', '10:40:00', '10:50:00', '11:00:00', '11:10:00', '11:20:00', '11:30:00', '11:40:00', '11:50:00', '12:00:00', '12:10:00', '12:20:00', '12:30:00', '12:40:00', '12:50:00', '13:00:00', '13:10:00', '13:20:00', '13:30:00', '13:40:00', '13:50:00', '14:00:00', '14:10:00', '14:20:00', '14:30:00', '14:40:00', '14:50:00', '15:00:00', '15:10:00', '15:20:00', '15:30:00', '15:40:00', '15:50:00', '16:00:00'],
+            name: '时间',
+            axisLabel: {
+              show: true,
+              textStyle: {
+                //color: '#c3dbff',  //更改坐标轴文字颜色
+                fontSize: 12      //更改坐标轴文字大小
+              }
+            },
+
+          },
+          yAxis: {
+            type: 'value',
+            show: true,
+            name: '体积流量 m3/d'
+
+          },
+          series: [{
+            name: '油',
+            smooth: true,
+            type: 'line',
+            itemStyle: {
+              normal: {
+                color: '#409EFF', //改变折线点的颜色
+                lineStyle: {
+                  color: '#409EFF' //改变折线颜色
+                }
+              }
+            },
+            data: [34, 65, 105, 141, 175, 213, 252, 289, 329, 359, 395, 426, 465, 498, 535, 571, 609, 639, 673, 709, 749, 789, 820, 860, 900, 935, 973, 1011, 1041, 1081, 1121, 1155, 1194, 1230, 1263, 1301, 1339, 1371, 1409, 1446, 1478, 1512, 1543, 1578, 1614, 1646, 1680, 1715, 1751]
+          },
+            {
+              name: '气',
+              type: 'line',
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: '#F56C6C', //改变折线点的颜色
+                  lineStyle: {
+                    color: '#F56C6C' //改变折线颜色
+                  }
+                }
+              },
+              data: [740, 1450, 2157, 2900, 3677, 4394, 5105, 5898, 6671, 7382, 8141, 8881, 9600, 10300, 11080, 11852, 12620, 13324, 14067, 14803, 15529, 16314, 17091, 17833, 18614, 19378, 20102, 20814, 21514, 22220, 22958, 23749, 24449, 25195, 25908, 26619, 27321, 28112, 28831, 29624, 30420, 31163, 31949, 32699, 33476, 34273, 34993, 35728, 36481]
+            },
+            {
+              name: '水',
+              type: 'line',
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: '#606266', //改变折线点的颜色
+                  lineStyle: {
+                    color: '#606266' //改变折线颜色
+                  }
+                }
+              },
+              data: [673, 1326, 1959, 2560, 3172, 3777, 4469, 5141, 5781, 6394, 7007, 7685, 8311, 8934, 9613, 10258, 10913, 11557, 12166, 12856, 13465, 14103, 14771, 15390, 16032, 16641, 17256, 17884, 18557, 19193, 19845, 20502, 21137, 21811, 22461, 23147, 23802, 24466, 25076, 25695, 26353, 26969, 27587, 28251, 28870, 29488, 30170, 30792, 31481]
+            },
+            {
+              name: '日报-油',
+              type: 'line',
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: '#409EFF', //改变折线点的颜色
+                  lineStyle: {
+                    color: '#409EFF' //改变折线颜色
+                  }
+                }
+              },
+              data: [34.68, 67.6, 107.1, 146.64, 166.25, 206.61, 259.56, 294.78, 338.87, 351.82, 395, 434.52, 488.25, 517.92, 524.3, 565.29, 584.64, 626.22, 706.65, 680.64, 778.96, 757.44, 803.6, 834.2, 936, 897.6, 982.73, 990.78, 1030.59, 1135.05, 1121, 1155, 1170.12, 1254.6, 1263, 1287.99, 1392.56, 1343.58, 1352.64, 1417.08, 1463.22, 1542.24, 1496.71, 1625.34, 1678.56, 1695.38, 1730.4, 1715, 1803.53]
+            },
+            {
+              name: '日报-气',
+              type: 'line',
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: 'red', //改变折线点的颜色
+                  lineStyle: {
+                    color: 'red' //改变折线颜色
+                  }
+                }
+              },
+              data: [740, 1479, 2264.85, 2987, 3529.92, 4218.24, 4900.8, 6015.96, 7004.55, 7012.9, 8141, 8525.76, 9792, 9785, 11080, 11970.52, 12746.2, 13190.76, 13504.32, 14803, 15063.13, 16640.28, 17091, 16941.35, 18055.58, 18409.1, 20906.08, 19773.3, 21514, 22886.6, 22498.84, 22799.04, 25182.47, 25446.95, 24871.68, 26885.19, 27047.79, 28955.36, 30272.55, 28439.04, 31941, 31474.63, 31310.02, 31718.03, 33810.76, 32559.35, 34643.07, 36799.84, 36845.81]
+            },
+            {
+              name: '日报-水',
+              type: 'line',
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: '#303133', //改变折线点的颜色
+                  lineStyle: {
+                    color: '#303133' //改变折线颜色
+                  }
+                }
+              },
+              data: [639.35, 1326, 1861.05, 2508.8, 3203.72, 3701.46, 4603.07, 5295.23, 5607.57, 6330.06, 7287.28, 7915.55, 8394.11, 9291.36, 9709.13, 10360.58, 11240.39, 11672.57, 12044.34, 13370.24, 12926.4, 14244.03, 15509.55, 15082.2, 15551.04, 16141.77, 16393.2, 17705.16, 18742.57, 19001.07, 19051.2, 20707.02, 21982.48, 21592.89, 22011.78, 22684.06, 23325.96, 24955.32, 25828.28, 24410.25, 25825.94, 26429.62, 26207.65, 27685.98, 28581.3, 29488, 28963.2, 31099.92, 29906.95]
+            }]
+        });
+        var option = {
+          tooltip: {
+            // a 系列名称  b  数据项名称  c  数值
+            formatter: "{a} <br/>{c} {b}"
+          },
+          series: [
+            {
+              name: "精度",
+              type: "gauge",
+              // 定义居于上层，否则会被覆盖
+              z: 3,
+              min: 0,
+              max: 100,
+              // 分成多少等份
+              splitNumber: 10,
+              // 半径
+              radius: '100%',
+              axisLine: {
+                lineStyle: {
+                  width: 10,
+                  color: [[0.1, 'green'], [0.2, 'yellow'],[0.3, 'orange'],[0.4,'#db555e'],[0.5,'#ba3779'],[1.1,'#881326'] ]
+                }
+              },
+              axisTick: {
+                // 坐标轴小标记
+                length: 15, // 属性length控制线长
+                lineStyle: {
+                  // 属性lineStyle控制线条样式
+                  color: "auto"
+                }
+              },
+              splitLine: {
+                // 分隔线
+                length: 20, // 属性length控制线长
+                lineStyle: {
+                  // 属性lineStyle（详见lineStyle）控制线条样式
+                  color: "auto"
+                }
+              },
+              // 仪表盘内刻度提示显示样式
+              axisLabel: {
+                fontWeight:'bold',
+                fontSize:10,
+                color: '#0e0d0d',
+              },
+              // 仪表盘内 单位 样式 %
+              title: {
+                // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                fontWeight: "bolder",
+                fontSize: 12,
+                // 文字倾斜样式
+                fontStyle: "italic"
+              },
+              //
+              detail: {
+                // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                // 设置内容提示格式
+                formatter: function (value) {
+                  return value;
+                },
+                // 内容文字粗细
+                borderRadius: 5,
+                fontSize:12,
+                width: 40,
+                color: 'white',
+                rich: {}
+              },
+              // 当前的 值 和 单位
+              data: [{ value: 40, name: "%" }]
+            },
+          ]
+        };
+
+        setInterval(function() {
+          option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+          myChart3.setOption(option, true);
+          myChart4.setOption(option, true);
+          myChart5.setOption(option, true);
+        }, 2000);
+      },
+
+      goToHistoryModel(){
+        this.$router.push({ path:'/ProductionManagement/ProductionOptimization/VirtualMeasurementOffLine'})
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
@@ -564,9 +840,13 @@
         margin-top: 5px;
         margin-bottom: -10px;
     }
+    .modelSelectZone{
+        width: 1300px;
+        margin-top: -15px;
+    }
     .selectZone{
         width: 1300px;
-        margin-top: -10px;
+        margin-top: 5px;
     }
     .selectZone .selectZoneTitle{
         font-size: 15px;
