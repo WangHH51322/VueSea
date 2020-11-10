@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-container>
-            <el-card class="box-card" shadow="always" style="width: 180px" :body-style="{ padding: '5px' }">
+            <el-card class="box-card" shadow="always" style="width: 200px;height: 650px;" :body-style="{ padding: '5px' }">
                 <el-aside width="100px">
                     <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
                 </el-aside>
@@ -66,6 +66,10 @@
           this.$router.push({ path:'/ProductionManagement/ProductionOptimization/ProductionOverview'})
         }else if (data.label == '生产优化'){
           this.$router.push({ path:'/ProductionManagement/ProductionOptimization'})
+        }else if (data.label == '平台工艺'){
+          this.$router.push({ path:'/ProductionManagement/ProductionOptimization/PlatformProcessAnalysisOnLine'})
+        }else if (data.label == '海管分析'){
+          this.$router.push({ path:'/ProductionManagement/ProductionOptimization/AnalysisOfSubmarinePipeline'})
         }
         console.log(data.label);
       },
@@ -85,8 +89,5 @@
 </script>
 
 <style>
-    .box-card {
-        width: 200px;
-        height: 650px;
-    }
+
 </style>

@@ -12,6 +12,7 @@ Vue.config.productionTip = false
 Vue.component(VeLine.name, VeLine)
 Vue.use(ElementUI);
 Vue.use(VCharts)
+Vue.use(echarts);
 Vue.prototype.$echarts = echarts
 
 new Vue({
